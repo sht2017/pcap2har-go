@@ -19,6 +19,7 @@ jobs:
           GOOS: windows
           GOARCH: arm64
         run: |
+          VERSION=$(git describe --tags 2>/dev/null || git rev-parse --short HEAD)
           go build -o pcap2har.exe -ldflags "-X github.com/colinnewell/pcap-cli/cli.Version=$VERSION" cmd/pcap2har/*.go
       - name: Upload Build
         uses: actions/upload-artifact@v4
