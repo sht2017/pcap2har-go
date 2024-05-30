@@ -10,12 +10,10 @@ jobs:
       GOOS: windows
       GOARCH: arm64
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ matrix.go-version }}
-      - name: Install dependencies
+      - name: Install dependencies [apt]
+      - run: sudo apt-get update
+      - run: sudo apt install libpcap-dev -y
+      - name: Install dependencies [go]
         run: go get .
       - name: Build
         run: go build -o pcap2har.exe -ldflags "-X github.com/colinnewell/pcap-cli/cli.Version=$VERSION" cmd/pcap2har/*.go
